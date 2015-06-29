@@ -129,6 +129,8 @@ class gitlab::params {
   $backup_monthday             = undef
   $backup_weekday              = undef
 
+  $backup_pg_path              = undef # set to '/usr/bin' if a newer version of pg_dump is needed for backup
+
   $backup_upload_connection    = undef # Backup to fog http://bit.ly/1t5nAv5
   $backup_upload_remote_directory = undef # Where to store backups in fog http://bit.ly/1t5nAv5
   $gitlab_shell_path           = undef # '/opt/gitlab/embedded/service/gitlab-shell/'

@@ -29,6 +29,7 @@ class gitlab::backup (
   $backup_month    = undef,
   $backup_monthday = undef,
   $backup_weekday  = undef,
+  $backup_pg_path  = undef,
 ) inherits ::gitlab {
 
   # Execute rake backup
@@ -40,6 +41,21 @@ class gitlab::backup (
     month    => $backup_month,
     monthday => $backup_monthday,
     weekday  => $backup_weekday,
+  }
+
+  if ( $backup_pg_path ) {
+    file { '/opt/gitlab/embedded/bin/pg_dump':
+      ensure   => 'link',
+      target   => "${backup_pg_path}/pg_dump",
+    }
+    file { '/opt/gitlab/embedded/bin/pg_dumpall':
+      ensure   => 'link',
+      target   => "${backup_pg_path}/pg_dumpall",
+    }
+    file { '/opt/gitlab/embedded/bin/pg_restore':
+      ensure   => 'link',
+      target   => "${backup_pg_path}/pg_restore",
+    }
   }
 
 }

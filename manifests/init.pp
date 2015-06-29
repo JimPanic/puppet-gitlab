@@ -800,6 +800,7 @@ class gitlab (
   $backup_month                = $::gitlab::params::backup_month,
   $backup_monthday             = $::gitlab::params::backup_monthday,
   $backup_weekday              = $::gitlab::params::backup_weekday,
+  $backup_pg_path              = $::gitlab::params::backup_pg_path,
   $backup_upload_connection    = $::gitlab::params::backup_upload_connection,
   $backup_upload_remote_directory = $::gitlab::params::backup_upload_remote_directory,
   $gitlab_shell_path           = $::gitlab::params::gitlab_shell_path,
@@ -1001,6 +1002,7 @@ class gitlab (
       backup_month    => $backup_month,
       backup_monthday => $backup_monthday,
       backup_weekday  => $backup_weekday,
+      backup_pg_path  => $backup_pg_path,
     }
 
     Class['::gitlab::install'] -> Class['::gitlab::backup']
