@@ -178,21 +178,10 @@ class gitlab::install inherits ::gitlab {
   validate_string($download_location)
   info("omnibus_filename is \'${omnibus_filename}\'")
 
-  # Use wget or curl to download gitlab
-  exec { 'download gitlab':
-    command => "${::gitlab::puppet_fetch_client} ${download_location}/${omnibus_filename} ${gitlab_url}",
-    path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin:/usr/local/sbin',
-    cwd     => $download_location,
-    creates => "${download_location}/${omnibus_filename}",
-    timeout => 1800,
-  }
-  # Install gitlab with the appropriate package manager (rpm or dpkg)
+  # Install gitlab with the default package manager (rpm or apt)
   package { 'gitlab':
-    ensure   => latest,
+    ensure   => "${::gitlab::gitlab_branch}",
     name     => 'gitlab-ce',
-    source   => "${download_location}/${omnibus_filename}",
-    provider => $package_manager,
-    require  => Exec['download gitlab'],
   }
 
 }
