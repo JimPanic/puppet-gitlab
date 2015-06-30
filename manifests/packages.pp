@@ -67,14 +67,6 @@ class gitlab::packages inherits ::gitlab {
       fail("Only CentOS/OracleLinux, Ubuntu and Debian presently supported, found \'${::osfamily}\':\'${::operatingsystem}\'-\'${::operatingsystemrelease}\' ")
     }
   }
-
-  package { 'openssh-server':
-    ensure => latest,
-  }
-  service { $ssh_service_name:
-    ensure  => running,
-    require => Package['openssh-server'],
-  }
   
   package { $mail_application:
     ensure => latest,
